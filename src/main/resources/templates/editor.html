@@ -2,29 +2,41 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Photo Editor</title>
+    <link rel="stylesheet" href="/static/images/index.css">
 </head>
 <body>
-<h2>Upload Image</h2>
+<h1>Photo Editor Application</h1>
+<h2>1) Upload Image</h2>
 <form action="/upload" method="post" enctype="multipart/form-data">
+    <label for="fileInput" class="custom-file-upload">Choose File</label>
     <input type="file" name="file" id="fileInput" required />
-    <img src="#" id="imagePreview" alt="Preview" style="display: none; max-width: 200px; max-height: 200px;" /><br>
+    <img src="#" id="imagePreview" alt="Preview" style="display: none;" />
     <button type="submit">Upload</button>
 </form>
 
-<h2>Crop Image</h2>
+<h2>2) Crop Image</h2>
 <form action="/crop" method="post" th:object="${imageModel}">
     <input type="hidden" name="fileName" th:field="*{fileName}" />
-    <input type="text" name="x" th:field="*{x}" placeholder="X coordinate" required />
-    <input type="text" name="y" th:field="*{y}" placeholder="Y coordinate" required />
-    <input type="text" name="width" th:field="*{width}" placeholder="Width" required />
-    <input type="text" name="height" th:field="*{height}" placeholder="Height" required />
+    <div class="form-row">
+        <input type="text" name="x" th:field="*{x}" placeholder="X coordinate" required />
+        <input type="text" name="y" th:field="*{y}" placeholder="Y coordinate" required />
+    </div>
+    <br>
+    <div class="form-row">
+        <input type="text" name="width" th:field="*{width}" placeholder="Width" required />
+        <input type="text" name="height" th:field="*{height}" placeholder="Height" required />
+    </div>
+    <br>
     <button type="submit">Crop</button>
 </form>
 
-<h2>Rotate Image</h2>
+<h2>3) Rotate Image</h2>
 <form action="/rotate" method="post">
     <input type="hidden" name="fileName" th:value="${fileName}" />
-    <input type="number" name="degrees" placeholder="Degrees" required />
+    <div class="form-row">
+        <input type="number" name="degrees" placeholder="Degrees" required />
+    </div>
+    <br>
     <button type="submit">Rotate</button>
 </form>
 
