@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Photo Editor</title>
+</head>
+<body>
+<h2>Upload Image</h2>
+<form action="/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" id="fileInput" required />
+    <img src="#" id="imagePreview" alt="Preview" style="display: none; max-width: 200px; max-height: 200px;" /><br>
+    <button type="submit">Upload</button>
+</form>
+
+<h2>Crop Image</h2>
+<form action="/crop" method="post" th:object="${imageModel}">
+    <input type="hidden" name="fileName" th:field="*{fileName}" />
+    <input type="text" name="x" th:field="*{x}" placeholder="X coordinate" required />
+    <input type="text" name="y" th:field="*{y}" placeholder="Y coordinate" required />
+    <input type="text" name="width" th:field="*{width}" placeholder="Width" required />
+    <input type="text" name="height" th:field="*{height}" placeholder="Height" required />
+    <button type="submit">Crop</button>
+</form>
+
+<h2>Rotate Image</h2>
+<form action="/rotate" method="post">
+    <input type="hidden" name="fileName" th:value="${fileName}" />
+    <input type="number" name="degrees" placeholder="Degrees" required />
+    <button type="submit">Rotate</button>
+</form>
+
+<!-- Display image here -->
+<script>
+    document.getElementById('fileInput').onchange = function (e) {
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            document.getElementById('imagePreview').src = event.target.result;
+            document.getElementById('imagePreview').style.display = 'block';
+        }
+        reader.readAsDataURL(e.target.files[0]);
+    };
+</script>
+</body>
+
+</html>
